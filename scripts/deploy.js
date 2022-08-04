@@ -45,7 +45,7 @@ async function main() {
   const grantRole = await tWRegistry.grantRole(
     "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929",
     tWFactory.address
-    )
+  )
   await grantRole.wait()
   console.log("role added to tWRegistry")
   
@@ -81,7 +81,8 @@ async function main() {
         platformFeeBps,
         platformFeeRecipient
       ]
-    ).replace("0x", ""))
+    ).replace("0x", "")
+  )
   const deployProxy = await tWFactory.deployProxy(
     "0x44726F7045524331313535000000000000000000000000000000000000000000", // DropERC1155 type
     _dataForDeployProxy
@@ -92,7 +93,6 @@ async function main() {
   console.log("DropERC1155 deployed by tWFactory: ", deployedDropERC1155ContractAddress)
 
   // todo: how to set fee info
-  // todo: add change uri function
 
   // 4. lazy mint
   const dp = new ethers.Contract(deployedDropERC1155ContractAddress, DropERC1155ABI, deployer)
@@ -109,7 +109,6 @@ async function main() {
   const setClaimConditionsSelector = "0xab073c22"
 
   const tokenId = 0
-
 
   const _dataForSetClaimConditions = setClaimConditionsSelector.concat(
     ethers.utils.defaultAbiCoder.encode(
@@ -134,7 +133,8 @@ async function main() {
         ],
         false
       ]
-    ).replace("0x", ""))
+    ).replace("0x", "")
+  )
   const multicall = await dp.multicall(
     [_dataForSetClaimConditions]
   );
