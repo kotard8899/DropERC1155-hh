@@ -2602,7 +2602,7 @@ contract DropERC1155 is
      *       The URIs for each token is the provided `_baseURIForTokens` + `{tokenId}`.
      */
     function lazyMint(uint256 _amount, string calldata _baseURIForTokens) external onlyRole(MINTER_ROLE) {
-        uint256 startId = nextTokenIdToMint;
+        uint256 startId = nextTokenIdToMint; 
         uint256 baseURIIndex = startId + _amount;
 
         nextTokenIdToMint = baseURIIndex;
@@ -2610,6 +2610,10 @@ contract DropERC1155 is
         baseURIIndices.push(baseURIIndex);
 
         emit TokensLazyMinted(startId, startId + _amount - 1, _baseURIForTokens);
+    }
+
+    function updateBaseURI(uint256 tokenId, string memory _baseURIForTokens) external onlyRole(MINTER_ROLE) {
+        baseURI[tokenId] = _baseURIForTokens;
     }
 
     /*///////////////////////////////////////////////////////////////
