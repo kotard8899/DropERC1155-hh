@@ -3,6 +3,8 @@ const hre = require("hardhat");
 const { ethers } = hre;
 const DropERC1155ABI = require("../ABI/DropERC1155.json")
 
+  // todo: how to set fee info
+
 async function main() {
   const [deployer] = await ethers.getSigners();
   const [
@@ -91,8 +93,6 @@ async function main() {
 
   const deployedDropERC1155ContractAddress = (await tWRegistry.getAll(deployer.address))[0]
   console.log("DropERC1155 deployed by tWFactory: ", deployedDropERC1155ContractAddress)
-
-  // todo: how to set fee info
 
   // 4. lazy mint
   const dp = new ethers.Contract(deployedDropERC1155ContractAddress, DropERC1155ABI, deployer)
