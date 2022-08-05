@@ -2612,8 +2612,12 @@ contract DropERC1155 is
         emit TokensLazyMinted(startId, startId + _amount - 1, _baseURIForTokens);
     }
 
-    function updateBaseURI(uint256 tokenId, string memory _baseURIForTokens) external onlyRole(MINTER_ROLE) {
-        baseURI[tokenId] = _baseURIForTokens;
+    function updateBaseURI(uint256 _tokenId, string memory _baseURIForTokens) external onlyRole(MINTER_ROLE) {
+        for (uint256 i = 0; i < baseURIIndices.length; ++i) {
+            if (_tokenId < baseURIIndices[i]) {
+                baseURI[baseURIIndices[i]] = _baseURIForTokens;
+            }
+        }
     }
 
     /*///////////////////////////////////////////////////////////////
