@@ -2662,9 +2662,6 @@ contract DropERC1155_NEW is
 
         // Get the active claim condition index.
         uint256 activeConditionId = getActiveClaimConditionId(_tokenId);
-        if (_proofs.length > 0) {
-            activeConditionId -= 1;
-        }
 
         /**
          *  We make allowlist checks (i.e. verifyClaimMerkleProof) before verifying the claim's general
