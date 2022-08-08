@@ -11,7 +11,8 @@ npx hardhat compile
 
 # Deploy
 ```shell
-npx hardhat run scripts/deploy.js --network rinkeby
+npx hardhat run scripts/deploy_new.js --network rinkeby
+npx hardhat run scripts/deploy_new.js --network matic
 ```
 
 # Verify
