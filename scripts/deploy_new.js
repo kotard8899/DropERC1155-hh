@@ -23,13 +23,13 @@ async function main() {
     ethers.getContractFactory("Forwarder"),
   ]);
   // for matic
-  
-  // const forwarder = await Forwarder.deploy();
-  // await forwarder.deployed();
-  // const tWFee = await TWFee.deploy(forwarder.address, "0x5DBC7B840baa9daBcBe9D2492E45D7244B54A2A0");
-  // await tWFee.deployed();
+  const forwarder = await Forwarder.deploy();
+  await forwarder.deployed();
+  const tWFee = await TWFee.deploy(forwarder.address, "0x5DBC7B840baa9daBcBe9D2492E45D7244B54A2A0");
+  await tWFee.deployed();
 
-  const twFeeAddress = "0x0000000000000000000000000000000000000000"
+  const twFeeAddress = tWFee.address
+  // const twFeeAddress = "0x671aE36db5A4A107607369C699B3Fdfeafa582f5"
   const _defaultAdmin = deployer.address
   const _name = "HHH testing"
   const _symbol = "HHH"
