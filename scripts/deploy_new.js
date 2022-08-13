@@ -15,11 +15,21 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   const [
     DropERC1155_NEW,
+    TWFee,
+    Forwarder,
   ] = await Promise.all([
     ethers.getContractFactory("DropERC1155_NEW"),
+    ethers.getContractFactory("TWFee"),
+    ethers.getContractFactory("Forwarder"),
   ]);
+  // for matic
+  
+  // const forwarder = await Forwarder.deploy();
+  // await forwarder.deployed();
+  // const tWFee = await TWFee.deploy(forwarder.address, "0x5DBC7B840baa9daBcBe9D2492E45D7244B54A2A0");
+  // await tWFee.deployed();
 
-  const twFeeAddress = "0x671aE36db5A4A107607369C699B3Fdfeafa582f5"
+  const twFeeAddress = "0x0000000000000000000000000000000000000000"
   const _defaultAdmin = deployer.address
   const _name = "HHH testing"
   const _symbol = "HHH"
@@ -32,17 +42,17 @@ async function main() {
   const _platformFeeRecipient = deployer.address
 
   const dropERC1155_NEW = await DropERC1155_NEW.deploy(
-    twFeeAddress, // TWFee
-    _defaultAdmin, // _defaultAdmin
-    _name, // _name
-    _symbol, // /symbol
-    _contractURI, // _contractURI
-    _trustedForwarders, // _trustedForwarders
-    _saleRecipient, // _saleRecipient
-    _royaltyRecipient, // _royaltyRecipient
-    _royaltyBps, // _royaltyBps
-    _platformFeeBps, // _platformFeeBps
-    _platformFeeRecipient // _platformFeeRecipient
+    twFeeAddress,
+    _defaultAdmin,
+    _name,
+    _symbol,
+    _contractURI,
+    _trustedForwarders,
+    _saleRecipient,
+    _royaltyRecipient,
+    _royaltyBps,
+    _platformFeeBps,
+    _platformFeeRecipient,
   );
   await dropERC1155_NEW.deployed();
 
@@ -53,17 +63,17 @@ async function main() {
   await hre.run("verify:verify", {
     address: dropERC1155_NEW.address,
     constructorArguments: [
-      twFeeAddress, // TWFee
-      _defaultAdmin, // _defaultAdmin
-      _name, // _name
-      _symbol, // /symbol
-      _contractURI, // _contractURI
-      _trustedForwarders, // _trustedForwarders
-      _saleRecipient, // _saleRecipient
-      _royaltyRecipient, // _royaltyRecipient
-      _royaltyBps, // _royaltyBps
-      _platformFeeBps, // _platformFeeBps
-      _platformFeeRecipient // _platformFeeRecipient
+      twFeeAddress,
+      _defaultAdmin,
+      _name,
+      _symbol,
+      _contractURI,
+      _trustedForwarders,
+      _saleRecipient,
+      _royaltyRecipient,
+      _royaltyBps,
+      _platformFeeBps,
+      _platformFeeRecipient,
     ],
   });
   

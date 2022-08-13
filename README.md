@@ -21,3 +21,4 @@ npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS "Constructor argu
 ```
 
 
+npx hardhat verify --network rinkeby --constructor-args arguments.js 0x1430b4f15B31E9E83C61206F8BA72Fd83586E425
