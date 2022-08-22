@@ -15,21 +15,21 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   const [
     DropERC1155_NEW,
-    TWFee,
-    Forwarder,
+    // TWFee,
+    // Forwarder,
   ] = await Promise.all([
     ethers.getContractFactory("DropERC1155_NEW"),
-    ethers.getContractFactory("TWFee"),
-    ethers.getContractFactory("Forwarder"),
+    // ethers.getContractFactory("TWFee"),
+    // ethers.getContractFactory("Forwarder"),
   ]);
   // for matic
-  const forwarder = await Forwarder.deploy();
-  await forwarder.deployed();
-  const tWFee = await TWFee.deploy(forwarder.address, "0x5DBC7B840baa9daBcBe9D2492E45D7244B54A2A0");
-  await tWFee.deployed();
+  // const forwarder = await Forwarder.deploy();
+  // await forwarder.deployed();
+  // const tWFee = await TWFee.deploy(forwarder.address, "0x5DBC7B840baa9daBcBe9D2492E45D7244B54A2A0");
+  // await tWFee.deployed();
 
-  const twFeeAddress = tWFee.address
-  // const twFeeAddress = "0x671aE36db5A4A107607369C699B3Fdfeafa582f5"
+  // const twFeeAddress = tWFee.address
+  const twFeeAddress = "0x671aE36db5A4A107607369C699B3Fdfeafa582f5" // here
   const _defaultAdmin = deployer.address
   const _name = "HHH testing"
   const _symbol = "HHH"

@@ -11,8 +11,8 @@ npx hardhat compile
 
 # Deploy
 ```shell
-npx hardhat run scripts/deploy_new.js --network rinkeby
-npx hardhat run scripts/deploy_new.js --network matic
+npx hardhat run scripts/deploy_zee.js --network rinkeby
+npx hardhat run scripts/deploy_zee.js --network matic
 ```
 
 # Verify
@@ -21,4 +21,4 @@ npx hardhat verify --network mainnet DEPLOYED_CONTRACT_ADDRESS "Constructor argu
 ```
 
 
-npx hardhat verify --network rinkeby --constructor-args arguments.js 0x1430b4f15B31E9E83C61206F8BA72Fd83586E425
+npx hardhat verify --network matic --constructor-args arguments.js <contractAddress>
