@@ -1244,7 +1244,7 @@ contract ZeeverseTicket is ERC721A, Ownable {
         Jungle
     }
 
-    struct NumInfo {
+    struct LvItem {
         uint256 maxNum;
         uint256 price;
         uint256 minted;
@@ -1255,7 +1255,7 @@ contract ZeeverseTicket is ERC721A, Ownable {
         AttrType attrType;
     }
 
-    mapping(LevelType => NumInfo) public LvInfo;
+    mapping(LevelType => LvItem) public LvInfo;
     // mapping (LevelType => uint256) private _LevelMinted;
     mapping(uint256 => TokenStatus) public tokenInfo;
 
@@ -1265,9 +1265,9 @@ contract ZeeverseTicket is ERC721A, Ownable {
         address fundReceiver,
         string memory _uri,
         address _weth,
-        NumInfo memory infoLegend,
-        NumInfo memory infoEpic,
-        NumInfo memory infoRare
+        LvItem memory infoLegend,
+        LvItem memory infoEpic,
+        LvItem memory infoRare
     ) ERC721A("NFT", "NFT") {
         treasury = fundReceiver;
         baseURI = _uri;
@@ -1282,7 +1282,7 @@ contract ZeeverseTicket is ERC721A, Ownable {
         uint256 _num = 1;
         address operator = _msgSender();
 
-        NumInfo memory lvInfo = LvInfo[tokenStatus.levelType];
+        LvItem memory lvInfo = LvInfo[tokenStatus.levelType];
 
         // require(SaleIsActive, "Sale must be active to mint NFT");
         // require(SALE_TIME_START <= block.timestamp, "Sell time not start yet");
@@ -1364,11 +1364,11 @@ contract ZeeverseTicket is ERC721A, Ownable {
         SALE_TIME_END = _SALE_TIME_END;
     }
 
-    function setLvInfo(LevelType levelType, NumInfo memory numInfoForLv)
+    function setLvInfo(LevelType levelType, LvItem memory lvItem)
         external
         onlyOwner
     {
-        LvInfo[levelType] = numInfoForLv;
+        LvInfo[levelType] = lvItem;
     }
 
     function flipSaleState() external onlyOwner {
