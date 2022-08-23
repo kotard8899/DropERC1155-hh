@@ -23,20 +23,17 @@ async function main() {
 
   const infoLegend = {
     maxNum: 10,
-    price: ethers.utils.parseEther("0.75"), 
-    minted: 0
+    price: ethers.utils.parseEther("0.75"),
   }
   
   const infoEpic = {
     maxNum: 30,
     price: ethers.utils.parseEther("0.5"),
-    minted: 0
   }
 
   const infoRare = {
     maxNum: 2,
     price: ethers.utils.parseEther("0.1"),
-    minted: 0
   }
 
   const zeeverseTicket = await ZeeverseTicket.deploy(

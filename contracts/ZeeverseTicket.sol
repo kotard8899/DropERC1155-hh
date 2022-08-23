@@ -1247,7 +1247,6 @@ contract ZeeverseTicket is ERC721A, Ownable {
     struct LvItem {
         uint256 maxNum;
         uint256 price;
-        uint256 minted;
     }
 
     struct TokenStatus {
@@ -1256,8 +1255,8 @@ contract ZeeverseTicket is ERC721A, Ownable {
     }
 
     mapping(LevelType => LvItem) public LvInfo;
-    // mapping (LevelType => uint256) private _LevelMinted;
-    mapping(uint256 => TokenStatus) public tokenInfo;
+    mapping (LevelType => uint256) public levelMinted;
+    mapping(uint256 => TokenStatus) private _tokenInfo;
 
     // WETH = "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"; // matic
     // WETH = "0xc778417e063141139fce010982780140aa0cd5ab"; // rinkeby
@@ -1287,9 +1286,9 @@ contract ZeeverseTicket is ERC721A, Ownable {
         // require(SaleIsActive, "Sale must be active to mint NFT");
         // require(SALE_TIME_START <= block.timestamp, "Sell time not start yet");
         // require(SALE_TIME_END > block.timestamp, "Sell time is over");
-        require(lvInfo.maxNum > lvInfo.minted, "This item is sold out");
+        require(remainAmount(tokenStatus.levelType) > 0, "This item is sold out");
 
-        LvInfo[tokenStatus.levelType].minted += _num;
+        levelMinted[tokenStatus.levelType] += _num;
 
         (bool success, ) = WETH.call(
             abi.encodeWithSignature(
@@ -1303,11 +1302,19 @@ contract ZeeverseTicket is ERC721A, Ownable {
         require(success, "WETH payment failed");
 
         _safeMint(operator, _num);
-        tokenInfo[totalSupply()] = tokenStatus;
+        _tokenInfo[totalSupply()] = tokenStatus;
     }
 
-    function remainAmount(LevelType levelType) external view returns (uint256) {
-        return LvInfo[levelType].maxNum - LvInfo[levelType].minted;
+    function remainAmount(LevelType levelType) public view returns (uint256) {
+        return LvInfo[levelType].maxNum - levelMinted[levelType];
+    }
+
+    function tokenInfo(uint256 tokenId) external view returns (TokenStatus memory) {
+        require(
+            _exists(tokenId),
+            "Nonexistent token"
+        );
+        return _tokenInfo[tokenId];
     }
 
     function tokenURI(uint256 tokenId)
@@ -1322,7 +1329,7 @@ contract ZeeverseTicket is ERC721A, Ownable {
             "ERC721Metadata: URI query for nonexistent token"
         );
 
-        TokenStatus memory tokenStatus = tokenInfo[tokenId];
+        TokenStatus memory tokenStatus = _tokenInfo[tokenId];
         string memory _base = baseURI;
 
         // Legend: 0
