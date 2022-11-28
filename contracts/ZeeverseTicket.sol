@@ -1258,8 +1258,6 @@ contract ZeeverseTicket is ERC721A, Ownable {
     mapping (LevelType => uint256) public levelMinted;
     mapping(uint256 => TokenStatus) private _tokenInfo;
 
-    // WETH = "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"; // matic
-    // WETH = "0xc778417e063141139fce010982780140aa0cd5ab"; // rinkeby
     constructor(
         address fundReceiver,
         string memory _uri,

@@ -1,13 +1,4 @@
 module.exports = [
-  "0x671aE36db5A4A107607369C699B3Fdfeafa582f5",
-  "0x7ebb6000feA30E11683A896cB745A5D51DdEEc6F",
-  "HHH testing",
-  "HHH",
-  "ipfs://QmcGAreyeaEhMqVgeUwcScp121tUww46cAAuqsYwwk6Mwd/0",
-  [],
-  "0x7ebb6000feA30E11683A896cB745A5D51DdEEc6F",
-  "0x7ebb6000feA30E11683A896cB745A5D51DdEEc6F",
-  500,
-  0,
-  "0x7ebb6000feA30E11683A896cB745A5D51DdEEc6F",
+  "0xF81eaDA23f0dadaaE9ddecAe669Dd3Cb1D82Ee44",
+  "0x0e2c02bcceec56356fa66cfdf0346ad626a7c698",
 ];

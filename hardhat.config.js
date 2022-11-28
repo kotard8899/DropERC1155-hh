@@ -27,19 +27,29 @@ module.exports = {
     settings: {
       optimizer: {
         enabled: true,
-        runs: 550,
+        runs: 300,
       },
     },
   },
   // defaultNetwork: "rinkeby",
   networks: {
-    rinkeby: {
-      url: process.env.RINKEBY_URL || "",
+    eth: {
+      url: process.env.MAINNET_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    goerli: {
+      url: process.env.GOERLI_URL || "",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     matic: {
       url: process.env.MATIC_URL || "",
+      accounts:
+        process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+    },
+    ftmt: {
+      url: "https://rpc.testnet.fantom.network/",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },

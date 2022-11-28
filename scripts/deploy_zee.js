@@ -22,8 +22,8 @@ async function main() {
   const weth = "0xc778417e063141139fce010982780140aa0cd5ab"
 
   const infoLegend = {
-    maxNum: 10,
-    price: ethers.utils.parseEther("0.75"),
+    maxNum: 9,
+    price: ethers.utils.parseEther("0.9"),
   }
   
   const infoEpic = {
@@ -32,8 +32,8 @@ async function main() {
   }
 
   const infoRare = {
-    maxNum: 2,
-    price: ethers.utils.parseEther("0.1"),
+    maxNum: 60,
+    price: ethers.utils.parseEther("0.125"),
   }
 
   const zeeverseTicket = await ZeeverseTicket.deploy(
@@ -60,23 +60,6 @@ async function main() {
       infoRare
     ]
   });
-
-  // 測試用
-  // approve deployer to zeeverseTicket
-  const wethContract = new ethers.Contract(weth, IERC20ABI, deployer)
-  const MAX_APPROVAL = ethers.BigNumber.from(2).pow(118);
-
-  const approveTx = await wethContract.approve(zeeverseTicket.address, MAX_APPROVAL)
-  await approveTx.wait()
-  console.log("weth approved")
-
-  // mint
-  await zeeverseTicket.mint({ levelType: 2, attrType: 0})
-  console.log("token minted")
-  await zeeverseTicket.mint({ levelType: 2, attrType: 0})
-  console.log("token minted")
-  await zeeverseTicket.mint({ levelType: 1, attrType: 0})
-  console.log("token minted")
 }
 
 // We recommend this pattern to be able to use async/await everywhere
