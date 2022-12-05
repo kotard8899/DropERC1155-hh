@@ -2528,7 +2528,7 @@ interface ITokenERC721 is
     event OwnerUpdated(address prevOwner, address newOwner);
 }
 
-contract BasicERC721 is
+contract LootexCreatorCollection is
     Initializable,
     ReentrancyGuardUpgradeable,
     ERC2771ContextUpgradeable,
@@ -2539,13 +2539,11 @@ contract BasicERC721 is
 {
     using StringsUpgradeable for uint256;
 
-    bytes32 private constant MODULE_TYPE = bytes32("BasicERC721");
+    bytes32 private constant MODULE_TYPE = bytes32("LootexCreatorCollection");
     uint256 private constant VERSION = 1;
 
     /// @dev Only TRANSFER_ROLE holders can have tokens transferred from or to them, during restricted transfers.
     bytes32 private constant TRANSFER_ROLE = keccak256("TRANSFER_ROLE");
-    /// @dev Only MINTER_ROLE holders can sign off on `MintRequest`s.
-    bytes32 private constant MINTER_ROLE = keccak256("MINTER_ROLE");
 
     /// @dev Max bps in the thirdweb system
     uint256 private constant MAX_BPS = 10_000;
@@ -2576,6 +2574,7 @@ contract BasicERC721 is
 
     string public baseURI;
     uint256 public initialDate;
+    uint256 public maxNFT;
 
     constructor() initializer {}
 
@@ -2588,7 +2587,8 @@ contract BasicERC721 is
         address[] memory _trustedForwarders,
         address _royaltyRecipient,
         uint128 _royaltyBps,
-        string memory baseURI_
+        string memory baseURI_,
+        uint256 _maxNFT
     ) external initializer {
         // Initialize inherited contracts, most base-like -> most derived.
         __ReentrancyGuard_init();
@@ -2601,10 +2601,10 @@ contract BasicERC721 is
         contractURI = _contractURI;
         initialDate = block.timestamp;
         baseURI = baseURI_;
+        maxNFT = _maxNFT;
 
         _owner = _defaultAdmin;
         _setupRole(DEFAULT_ADMIN_ROLE, _defaultAdmin);
-        _setupRole(MINTER_ROLE, _defaultAdmin);
         _setupRole(TRANSFER_ROLE, _defaultAdmin);
         _setupRole(TRANSFER_ROLE, address(0));
     }
@@ -2620,7 +2620,7 @@ contract BasicERC721 is
             uint256
         )
     {
-        return (name(), "BasicERC721", initialDate);
+        return (name(), "LootexCreatorCollection", initialDate);
     }
 
     /// @dev Returns the module type of the contract.
@@ -2644,12 +2644,11 @@ contract BasicERC721 is
         return baseURI;
     }
 
-    /// @dev Lets an account with MINTER_ROLE mint an NFT.
     function mintTo(address _to, string memory _uri)
         external
-        onlyRole(MINTER_ROLE)
     {
         uint256 _tokenId = nextTokenIdToMint;
+        require(_tokenId < maxNFT, "Exceed Maximum Supply");
         _mint(_to, _tokenId);
         if (bytes(_uri).length > 0) {
             uri[_tokenId] = _uri;
@@ -2659,10 +2658,10 @@ contract BasicERC721 is
 
     function mintToBatch(address[] memory _tos, string[] memory _uris)
         external
-        onlyRole(MINTER_ROLE)
     {
         uint256 _tokenId = nextTokenIdToMint;
         uint256 length = _tos.length;
+        require(_tokenId + length < maxNFT, "Exceed Maximum Supply");
 
         for (uint256 i = 0; i < length; ) {
             _mint(_tos[i], _tokenId);

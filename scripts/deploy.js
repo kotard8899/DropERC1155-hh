@@ -12,6 +12,7 @@ async function main() {
     BasicERC1155,
     DropERC1155,
     BasicERC721,
+    BasicERC721LimitedEdition,
     DropERC721,
     SignatureDrop,
     TWRegistry,
@@ -22,6 +23,7 @@ async function main() {
     ethers.getContractFactory("BasicERC1155"),
     ethers.getContractFactory("DropERC1155"),
     ethers.getContractFactory("BasicERC721"),
+    ethers.getContractFactory("BasicERC721LimitedEdition"),
     ethers.getContractFactory("DropERC721"),
     ethers.getContractFactory("SignatureDrop"),
     ethers.getContractFactory("contracts/TWRegistry.sol:TWRegistry"),
@@ -38,6 +40,8 @@ async function main() {
   await tWFactory.deployed();
   const basicERC721 = await BasicERC721.deploy();
   await basicERC721.deployed();
+  const basicERC721LimitedEdition = await BasicERC721LimitedEdition.deploy();
+  await basicERC721LimitedEdition.deployed();
   const basicERC1155 = await BasicERC1155.deploy();
   await basicERC1155.deployed();
   // const tWFee = await TWFee.deploy(forwarder.address, tWFactory.address);
@@ -52,6 +56,7 @@ async function main() {
   console.log("tWRegistry deployed to:", tWRegistry.address);
   console.log("tWFactory deployed to:", tWFactory.address);
   console.log("basicERC721 deployed to:", basicERC721.address);
+  console.log("BasicERC721LimitedEdition deployed to:", basicERC721LimitedEdition.address);
   console.log("basicERC1155 deployed to:", basicERC1155.address);
   // console.log("tWFee deployed to:", tWFee.address);
   // console.log("dropERC1155 deployed to:", dropERC1155.address);
@@ -63,12 +68,14 @@ async function main() {
   // const addImplementation2 = await tWFactory.addImplementation(dropERC721.address);
   const addImplementation3 = await tWFactory.addImplementation(signatureDrop.address);
   const addImplementation4 = await tWFactory.addImplementation(basicERC721.address);
-  const addImplementation5 = await tWFactory.addImplementation(basicERC1155.address);
+  const addImplementation5 = await tWFactory.addImplementation(basicERC721LimitedEdition.address);
+  const addImplementation6 = await tWFactory.addImplementation(basicERC1155.address);
   // await addImplementation.wait()
   // await addImplementation2.wait()
   await addImplementation3.wait()
   await addImplementation4.wait()
   await addImplementation5.wait()
+  await addImplementation6.wait()
   console.log("implementation added")
 
   // add tWFactory as role to tWRegistry

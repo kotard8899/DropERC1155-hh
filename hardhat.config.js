@@ -49,7 +49,7 @@ module.exports = {
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
     ftmt: {
-      url: "https://rpc.testnet.fantom.network/",
+      url: "https://rpc.ankr.com/fantom_testnet",
       accounts:
         process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
     },
